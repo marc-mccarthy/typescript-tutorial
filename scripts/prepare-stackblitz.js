@@ -11,19 +11,19 @@ const packageJsonPath = path.resolve(__dirname, "../package.json");
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
 const exercises = fs.readdirSync(path.resolve(__dirname, "../src"));
 const exerciseFiles = exercises.filter((exercise) =>
-  exercise.includes(".problem."),
+	exercise.includes(".problem.")
 );
 const exerciseNames = exerciseFiles.map((exercise) => exercise.split("-")[0]);
 
 const newPackageJson = Object.assign({}, packageJson);
 
 newPackageJson.scripts = {
-  ...packageJson.scripts,
+	...packageJson.scripts,
 };
 
 exerciseNames.forEach((exercise) => {
-  newPackageJson.scripts[`e-${exercise}`] = `npm run exercise -- ${exercise}`;
-  newPackageJson.scripts[`s-${exercise}`] = `npm run solution -- ${exercise}`;
+	newPackageJson.scripts[`e-${exercise}`] = `npm run exercise -- ${exercise}`;
+	newPackageJson.scripts[`s-${exercise}`] = `npm run solution -- ${exercise}`;
 });
 
 fs.writeFileSync(packageJsonPath, JSON.stringify(newPackageJson, null, 2));
